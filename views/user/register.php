@@ -8,6 +8,11 @@
     <title>Document</title>
 </head>
 <body>
+    <?php if (isset($errors)) {
+        foreach ($errors as $error):
+            echo $error . "<br>";
+        endforeach;
+    } ?>
     <form action="#" method="POST">
         <input type="text" name="lname" placeholder="Фамилия">
         <input type="text" name="fname" placeholder="Имя">

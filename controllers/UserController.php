@@ -3,7 +3,7 @@
 
 class UserController
 {
-    public function actionRegister() // надо дополнить валидацией 
+    public function actionRegister()
     {
         if(isset($_POST['submit'])) {
             $email = trim($_POST['email']);
@@ -14,7 +14,27 @@ class UserController
 
             $errors = false;
 
+            if (!User::checkPassword($password)) {
+                $errors[] = 'Пароль должен быть не короче 6 символов';
+            }
+            if (!User::checkEmail($email)) {
+                $errors[] = 'Некорректно введен email';
+            }
+            if (User::checkEmailExists($email)) {
+                $errors[] = 'Данный e-mail уже зарегестрирован. Попробуйте другой.';
+            }
+            if (!User::checkName($fname)) {
+                $errors[] = 'Имя не может быть короче двух символов.';
+            }
+            if (!User::checkName($lname)) {
+                $errors[] = 'Фамилия не может быть короче двух символов.';
+            }
+            if (!User::checkMName($mname)) {
+                $errors[] = 'Отчество не может быть короче четырех символов';
+            }
+
            if ($errors == false) {
+                $password = password_hash($password, PASSWORD_DEFAULT);
                 $result = User::register($email, $password, $fname, $lname, $mname);
                 if ($result) {
                     $_SESSION['email'] = $email;
@@ -25,5 +45,13 @@ class UserController
         
         require_once(ROOT . '/views/user/register.php');
         return true;
+    }
+
+    public function actionLogin() {
+
+    }
+
+    public function actionLogout() {
+
     }
 }
