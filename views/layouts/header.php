@@ -15,7 +15,7 @@
     </div>
     <div class="links header-links">
         <?php if (!User::is_login()) echo '
-            <a href="#">Авторизация</a>
+            <a href="user/login">Авторизация</a>
             <a href="user/register">Регистрация</a> ';
             else echo '
             <a href="user/cabinet">Личный кабинет</a>';

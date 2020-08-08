@@ -18,9 +18,29 @@ class User
         return $result -> execute();
     }
 
-    public static function login()
+    public static function login($email, $password)
     {
+        $db = Db::getConnection();
 
+        $sql = "SELECT * FROM users WHERE email = :email;";
+        $result = $db -> prepare($sql);
+        $result -> bindParam(':email', $email, PDO::PARAM_STR);
+        $result -> setFetchMode(PDO::FETCH_ASSOC);
+        $result -> execute();
+
+        $array = $result -> fetch();
+
+        $verify = password_verify($password, $array['password']);
+
+        if ($verify) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function afterAuth($email) {
+        $_SESSION['email'] = $email;
+        header("Location: /");
     }
 
     public static function is_login()
