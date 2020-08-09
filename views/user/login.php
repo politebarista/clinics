@@ -10,7 +10,7 @@
         E-mail:<input type="text" name="email"><br>
         Password:<input type="password" name="password"><br>
         <input type="submit" name="submit" value="Авторизация"><br>
-        <a href="doctor/login">Вы врач?</a>
+        <a href="../doctor/login">Вы врач?</a>
     </form>
 </body>
 </html>
