@@ -36,9 +36,12 @@ class UserController
            if ($errors == false) {
                 $password = password_hash($password, PASSWORD_DEFAULT);
                 $result = User::register($email, $password, $fname, $lname, $mname);
-                if ($result) {
-                    User::afterAuth($email);
-                }
+                
+                $userId = User::checkUserData($email);
+                
+                User::auth($userId);
+
+                header("Location: /");
            }
         }
         
@@ -57,7 +60,11 @@ class UserController
 
         $result = User::login($email, $password);
         if ($result) {
-            User::afterAuth($email);
+            $userId = User::checkUserData($email);
+                
+            User::auth($userId);
+
+            header("Location: /");
         }
 
         require_once(ROOT . '/views/user/login.php');
@@ -65,6 +72,7 @@ class UserController
     }
 
     public function actionLogout() {
-
+        unset($_SESSION['user']);
+        header("Location: / ");
     }
 }

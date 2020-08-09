@@ -18,7 +18,8 @@
             <a href="user/login">Авторизация</a>
             <a href="user/register">Регистрация</a> ';
             else echo '
-            <a href="user/cabinet">Личный кабинет</a>';
+            <a href="cabinet">Личный кабинет</a>
+            <a href="user/logout">Выйти</a>';
         ?>
     </div>
 </header>

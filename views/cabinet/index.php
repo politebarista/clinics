@@ -2,7 +2,7 @@
 
 
 <body>
-
+<h1>Здравствуйте,  <?php echo $array['lname'] .' ' . $array['fname'] . ' ' . $array['mname']; ?></h1>
 </body>
 
 

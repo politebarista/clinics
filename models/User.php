@@ -38,17 +38,45 @@ class User
         return false;
     }
 
-    public static function afterAuth($email) {
-        $_SESSION['email'] = $email;
-        header("Location: /");
+    public static function auth($userId)
+    {
+        $_SESSION['user'] = $userId;
+    }
+
+    public static function checkUserData($email) {
+        $db = Db::getConnection();
+
+        $sql = "SELECT id FROM users WHERE email = :email;";
+        $result = $db -> prepare($sql);
+        $result -> bindParam(':email', $email, PDO::PARAM_STR);
+        $result -> setFetchMode(PDO::FETCH_ASSOC);
+        $result -> execute();
+
+        $array = $result -> fetch();
+
+        return $userId = $array['id'];
     }
 
     public static function is_login()
     {
-        if (isset($_SESSION['email'])) {
+        if (isset($_SESSION['user'])) {
             return true;
         }
         return false;
+    }
+
+    public static function getUserById() {
+        $id = $_SESSION['user'];
+
+        $db = Db::getConnection();
+
+        $sql = "SELECT * FROM users WHERE id = :id;";
+        $result = $db -> prepare($sql);
+        $result -> bindParam(':id', $id, PDO::PARAM_STR);
+        $result -> setFetchMode(PDO::FETCH_ASSOC);
+        $result -> execute();
+
+        return $array = $result -> fetch();
     }
 
     public static function checkPassword($password) {
